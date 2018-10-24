@@ -6,13 +6,20 @@ vote tallies until voting has ended. It serves as an example app for our Web3(c)
 To interact with this dApp locally follow the steps below.
 
 ## Initial Setup
-* Edit `truffle.js` to add the mnemonic for your private key. This will be the address that deploys the smart contract;
-you must control this address if you want to end voting from the dApp!
 
 * Run `npm install`
 
-## Deploying the Smart Contract
-To deploy a new ballot, run:
+* To modify the contract, run `npm install -g truffle`
+
+## Building & Deploying the Smart Contract
+To build a new ballot, run:
+
+* `truffle compile`
+
+You can deploy the contract with truffle. to do so:
+
+* Edit `truffle.js` to add the mnemonic for your private key. This will be the address that deploys the smart contract;
+you must control this address if you want to end voting from the dApp!
 
 * `truffle migrate --reset --network oasis`
 
@@ -31,6 +38,7 @@ In this example the ballot was deployed to address `0x1dd2838d8290dd83d5d060d1b3
 ## Interacting with the dApp
 
 * Launch the local web server: `npm run dev`
+
 * In your browser visit `localhost:8080?ballot=<contract address>`
 
 ## Notes and Troubleshooting
