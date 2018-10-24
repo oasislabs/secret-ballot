@@ -1,0 +1,109 @@
+body {
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 5%;
+  font-size: 20px;
+  font-family: "Open Sans", sans-serif;
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+}
+
+input {
+  width: 500px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+button {
+  font-size: 16px;
+  padding: 5px;
+}
+
+h1, h2 {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #AAA;
+  font-size: 32px;
+}
+
+h3 {
+  font-weight: normal;
+  color: #AAA;
+  font-size: 24px;
+}
+
+.black {
+  color: black;
+}
+
+#total-votes-row {
+  font-style: bold;
+  color: black;
+  background: lightcyan;
+}
+
+#balance {
+  color: black;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  vertical-align:middle;
+}
+
+.total-votes-msg {
+  font-size:14px;
+  font-style: bold;
+}
+
+.hint {
+  color: #666;
+}
+
+.highlight {
+  background: yellow;
+}
+
+#ballot-table {
+  width:500px;
+  margin-top:10px;
+}
+
+.my-vote {
+  font-size:18px;
+  color:brown;
+}
+
+.center {
+  text-align:center;
+}
+
+#wallet-div {
+  margin-top:15px;
+  width:500px;
+  font-size:18px;
+}
+
+#vote-status-alert {
+  color: black;
+  font-weight: bold;
+  padding-top:10px;
+}
+
+.blinking{
+  animation:blinkingText 0.8s infinite;
+}
+@keyframes blinkingText{
+  0%{  color: #f00;	}
+  49%{	color: #f00;	}
+  50%{	color: transparent;	}
+  99%{	color:transparent;	}
+  100%{	color: #f00;	}
+}
