@@ -79,14 +79,21 @@ window.deploy = async function() {
   let candidates = $("#candidates").text().trim().split("\n").map(web3.utils.fromAscii);
   let protoBallot = web3.confidential.Contract(ballot_artifacts.abi);
   try {
-    SecretBallot = await protoBallot.deploy({
+    let deployMethod = protoBallot.deploy({
       data: ballot_artifacts.bytecode,
       arguments: [candidates]
-    }).send({from: account});
+    });
+    let gas = await deployMethod.estimateGas();
+    SecretBallot = await deployMethod.send({
+      gasPrice: "0x3b9aca00",
+      gas: gas,
+      from: account
+    });
   } catch(e) {
-    $("#deploy-alert").text("Error Deploying: " + e);
+    $("#deploy-status").text("Error Deploying: " + e);
     return
   }
+  // reload to run page that can be shared.
   window.location.href+="?ballot="+ SecretBallot.options.address;
 }
 
@@ -134,7 +141,7 @@ function load() {
   web3 = new Web3c(window.ethereum);
   web3.eth.getAccounts().then((a) => {
     if (!a.length) {
-      $("#vote-status-alert").text("Please unlock your wallet, and then reload.");
+      $("#voting-status").text("Please unlock your wallet, and then reload.");
       return;
     }
     account = a[0];
@@ -149,14 +156,15 @@ function load() {
   });
 }
 
+// attempt to unlock the metamask wallet
 function unlock () {
   if (window.ethereum) {
     window.ethereum.enable().then(load).catch((e) => {
       console.error(e);
-      $("#vote-status-alert").text("Error: " + e);
+      $("#voting-status").text("Error: " + e);
     });
   } else {
-    $("#vote-status-alert").text("Error: Newer version of metamask needed!");
+    $("#voting-status").text("Error: Newer version of metamask needed!");
   }
 }
 
