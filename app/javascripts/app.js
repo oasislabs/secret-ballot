@@ -70,8 +70,24 @@ window.voteForCandidate = function (candidateName) {
   }
 }
 
-async function startNew() {
-  //TODO: deploy flow.
+function startNew() {
+  $("#new-ballot").removeClass("hidden");
+  $(".table-responsive").addClass("hidden");
+}
+
+window.deploy = async function() {
+  let candidates = $("#candidates").text().trim().split("\n").map(web3.utils.fromAscii);
+  let protoBallot = web3.confidential.Contract(ballot_artifacts.abi);
+  try {
+    SecretBallot = await protoBallot.deploy({
+      data: ballot_artifacts.bytecode,
+      arguments: [candidates]
+    }).send({from: account});
+  } catch(e) {
+    $("#deploy-alert").text("Error Deploying: " + e);
+    return
+  }
+  window.location.href+="?ballot="+ SecretBallot.options.address;
 }
 
 async function runAt(address) {

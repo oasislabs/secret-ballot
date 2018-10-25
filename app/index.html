@@ -7,6 +7,15 @@
 </head>
 <body class="container">
 <center><h1>Oasis Secret Ballot dApp</h1></center>
+<div id="new-ballot" class="hidden center">
+    <textarea id="candidates" rows=5>
+Bulbasaur
+Charmander
+Squirtle
+    </textarea> <br />
+    <a onclick="deploy()" class="btn btn-lg btn-danger">Create ballot.</a><br />
+    <span id="deploy-status"></span>
+</div>
 <div class="table-responsive">
     <center>
         <div><b>Voting:</b>&nbsp;&nbsp;<span id="voting-status"></span></div>

@@ -91,7 +91,7 @@ h3 {
   font-size:18px;
 }
 
-#vote-status-alert {
+#vote-status-alert, #deploy-status {
   color: black;
   font-weight: bold;
   padding-top:10px;
