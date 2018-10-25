@@ -23,7 +23,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 
 window.refreshVoteTotals = async function () {
-    let totalVotes = await SecretBallot.methods.totalVotes.call();
+    let totalVotes = await SecretBallot.methods.totalVotes().call();
     $("#total-votes").html(totalVotes.toString());
 
     var hasVoted = await SecretBallot.methods.hasVoted(account).call();
@@ -51,19 +51,13 @@ window.endVoting = async function () {
     }
 }
 
-window.voteForCandidate = function (candidateName) {
+window.voteForCandidate = async function (candidateName) {
   try {
     $("#vote-status-alert").text("Vote submitted. Please confirm in Metamask...").addClass("blinking");
     $("#candidate").val("");
 
-    SecretBallot.at(contractAddress).then(async function (contractInstance) {
-      try {
-        await contractInstance.voteForCandidate(candidateName, {gas: 140000, from: web3.eth.accounts[0]});
-      } catch (err) {
-
-      }
-      refreshVoteTotals();
-    });
+    await contractInstance.voteForCandidate(candidateName, {gas: 140000, from: web3.eth.accounts[0]}).send();
+    refreshVoteTotals();
   } catch (err) {
     $("#vote-status-alert").text("Error: " + err);
     console.log(err);
@@ -84,6 +78,7 @@ window.deploy = async function() {
       arguments: [candidates]
     });
     let gas = await deployMethod.estimateGas();
+    gas *= 2;
     SecretBallot = await deployMethod.send({
       gasPrice: "0x3b9aca00",
       gas: gas,
@@ -99,8 +94,8 @@ window.deploy = async function() {
 
 async function runAt(address) {
   SecretBallot = web3.confidential.Contract(ballot_artifacts.abi, address);
-    votingEnded = await SecretBallot.methods.votingEnded.call();
-    const numCandidates = await SecretBallot.methods.numCandidates.call();
+    votingEnded = await SecretBallot.methods.votingEnded().call();
+    const numCandidates = await SecretBallot.methods.numCandidates().call();
 
     const genPromisArr = function (numCandidates) {
       let output = [];
@@ -115,12 +110,12 @@ async function runAt(address) {
         .then(async function (response) {
 
           for (let i = numCandidates - 1; i >= 0; i--) {
-            let candidateName = web3.toUtf8(response[i]).toString();
+            let candidateName = web3.utils.toUtf8(response[i]).toString();
             candidates.push(candidateName);
 
             $("#candidate-list").append('<tr><td>' + candidateName + '</td><td class="center"><span id="votes-' + candidateName + '">?</span></td><td class="center" style="width:150px"><a href="#" id="' + candidateName + '" onclick="voteForCandidate(\'' + candidateName + '\')" class="hidden btn btn-primary vote-button">Vote</a><div class"vote-div" id="row-' + candidateName + '"></td></tr>');
             if (votingEnded) {
-              let votesForCandidate = await SecretBallot.methods.totalVotesFor.call(candidateName)
+              let votesForCandidate = await SecretBallot.methods.totalVotesFor(candidateName).call()
               $("#votes-" + candidateName).text(votesForCandidate);
             }
           }
