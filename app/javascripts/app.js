@@ -43,7 +43,13 @@ window.refreshVoteTotals = async function () {
 }
 
 window.endVoting = async function () {
-    let success = await SecretBallot.methods.endVoting({gas: 140000, from: web3.eth.accounts[0]}).send();
+  let end = SecretBallot.methods.endVoting();
+  let gas = end.estimateGas();
+  gas *= 2;
+    let success = await end.send({
+      gas: gas,
+      from: account
+    });
     if (success) {
       location.reload();
     } else {
@@ -56,7 +62,13 @@ window.voteForCandidate = async function (candidateName) {
     $("#vote-status-alert").text("Vote submitted. Please confirm in Metamask...").addClass("blinking");
     $("#candidate").val("");
 
-    await contractInstance.voteForCandidate(candidateName, {gas: 140000, from: web3.eth.accounts[0]}).send();
+    let vote = SecretBallot.methods.voteForCandidate(web3.utils.fromAscii(candidateName));
+    let gas = vote.estimateGas();
+    gas *= 2;
+    await  vote.send({
+      gas: gas,
+      from: account
+    });
     refreshVoteTotals();
   } catch (err) {
     $("#vote-status-alert").text("Error: " + err);
@@ -115,7 +127,7 @@ async function runAt(address) {
 
             $("#candidate-list").append('<tr><td>' + candidateName + '</td><td class="center"><span id="votes-' + candidateName + '">?</span></td><td class="center" style="width:150px"><a href="#" id="' + candidateName + '" onclick="voteForCandidate(\'' + candidateName + '\')" class="hidden btn btn-primary vote-button">Vote</a><div class"vote-div" id="row-' + candidateName + '"></td></tr>');
             if (votingEnded) {
-              let votesForCandidate = await SecretBallot.methods.totalVotesFor(candidateName).call()
+              let votesForCandidate = await SecretBallot.methods.totalVotesFor(web3.utils.fromAscii(candidateName)).call()
               $("#votes-" + candidateName).text(votesForCandidate);
             }
           }
