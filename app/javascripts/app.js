@@ -44,11 +44,9 @@ window.refreshVoteTotals = async function () {
 
 window.endVoting = async function () {
   let end = SecretBallot.methods.endVoting();
-  let gas = end.estimateGas();
-  gas *= 2;
+  let gas = await end.estimateGas();
     let success = await end.send({
       gas: gas,
-      from: account
     });
     if (success) {
       location.reload();
@@ -63,11 +61,9 @@ window.voteForCandidate = async function (candidateName) {
     $("#candidate").val("");
 
     let vote = SecretBallot.methods.voteForCandidate(web3.utils.fromAscii(candidateName));
-    let gas = vote.estimateGas();
-    gas *= 2;
+    let gas = await vote.estimateGas();
     await  vote.send({
       gas: gas,
-      from: account
     });
     refreshVoteTotals();
   } catch (err) {
@@ -83,18 +79,16 @@ function startNew() {
 
 window.deploy = async function() {
   let candidates = $("#candidates").text().trim().split("\n").map(web3.utils.fromAscii);
-  let protoBallot = web3.confidential.Contract(ballot_artifacts.abi);
+  let protoBallot = web3.confidential.Contract(ballot_artifacts.abi, undefined, {from: account});
   try {
     let deployMethod = protoBallot.deploy({
       data: ballot_artifacts.bytecode,
       arguments: [candidates]
     });
     let gas = await deployMethod.estimateGas();
-    gas *= 2;
     SecretBallot = await deployMethod.send({
       gasPrice: "0x3b9aca00",
-      gas: gas,
-      from: account
+      gas: gas
     });
   } catch(e) {
     $("#deploy-status").text("Error Deploying: " + e);
@@ -105,7 +99,7 @@ window.deploy = async function() {
 }
 
 async function runAt(address) {
-  SecretBallot = web3.confidential.Contract(ballot_artifacts.abi, address);
+  SecretBallot = web3.confidential.Contract(ballot_artifacts.abi, address, {from: account});
     votingEnded = await SecretBallot.methods.votingEnded().call();
     const numCandidates = await SecretBallot.methods.numCandidates().call();
 
