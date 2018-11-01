@@ -1,13 +1,13 @@
 {
-  "name": "truffle-init-webpack",
+  "name": "secret-ballot",
   "version": "0.0.1",
-  "description": "Frontend example using truffle v3",
+  "description": "Simple Web3c Example",
   "scripts": {
     "lint": "eslint ./",
     "build": "webpack",
     "dev": "webpack-dev-server"
   },
-  "author": "Douglas von Kohorn",
+  "author": "Oasis Labs",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.22.2",
@@ -29,11 +29,11 @@
     "html-webpack-plugin": "^2.28.0",
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.1",
-    "truffle-contract": "^1.1.6",
-    "web3": "^0.18.2",
+    "web3c": "*",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
   },
+  "_TODO:": "link to web3c npm module once pubished.",
   "dependencies": {
     "truffle-hdwallet-provider": "0.0.6",
     "web3-provider-engine": "^14.1.0"
