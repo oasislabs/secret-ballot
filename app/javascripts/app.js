@@ -72,7 +72,7 @@ function startNew() {
 }
 
 window.deploy = async function() {
-  let candidates = $("#candidates").text().trim().split("\n").map(web3.utils.fromAscii);
+  let candidates = $("#candidates").val().trim().split("\n").map(web3.utils.fromAscii);
   let protoBallot = web3.confidential.Contract(ballot_artifacts.abi, undefined, {from: account});
   try {
     let deployMethod = protoBallot.deploy({
