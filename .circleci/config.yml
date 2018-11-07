@@ -1,0 +1,73 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10-stretch
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      # Pre-release access to web3c. remove once released.
+      - run: |
+          mkdir node_modules
+          curl -vLJO -H 'Accept: application/octet-stream' 'https://api.github.com/repos/oasislabs/web3c.js/releases/assets/1?access_token={$GITHUB_TOKEN}
+          tar xvzf *.tgz node_modules/web3c
+      
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: npm run-script build
+
+      - store_artifacts:
+          path: build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+
+  deploy-staging:
+    docker:
+      - image: circleci/python:2.7-jessie
+    steps:
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          # CircleCI's AWS Credentials are allowed to assume a role that has S3
+          # access in the staging account. 
+          name: Create an ~/.aws/config file to assume the staging role for aws. 
+          command: mkdir -p ~/.aws && printf "[profile staging]\nrole_arn = ${AWS_STAGING_ROLE_ARN}\ncredential_source = Environment\n" > ~/.aws/config
+      - attach_workspace:
+          at: secret-ballot
+      - run:
+          name: Deploy to S3
+          command: aws s3 sync --profile staging secret-ballot/build/ s3://web3cjs-staging/ballot/ --delete
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - deploy-staging:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
