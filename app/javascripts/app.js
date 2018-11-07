@@ -5,7 +5,7 @@ import ballot_artifacts from '../../build/contracts/SecretBallot.json'
 
 var web3, account, SecretBallot, contractAddress;
 var votingEnded = false;
-var candidates = [];  
+var candidates = [];
 
 var getUrlParameter = function getUrlParameter(sParam) {
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -44,10 +44,7 @@ window.refreshVoteTotals = async function () {
 
 window.endVoting = async function () {
   let end = SecretBallot.methods.endVoting();
-  let gas = await end.estimateGas();
-    let success = await end.send({
-      gas: gas,
-    });
+  let success = await end.send();
     if (success) {
       location.reload();
     } else {
@@ -61,10 +58,7 @@ window.voteForCandidate = async function (candidateName) {
     $("#candidate").val("");
 
     let vote = SecretBallot.methods.voteForCandidate(web3.utils.fromAscii(candidateName));
-    let gas = await vote.estimateGas();
-    await  vote.send({
-      gas: gas,
-    });
+    await  vote.send();
     refreshVoteTotals();
   } catch (err) {
     $("#vote-status-alert").text("Error: " + err);
@@ -85,11 +79,7 @@ window.deploy = async function() {
       data: ballot_artifacts.bytecode,
       arguments: [candidates]
     });
-    let gas = await deployMethod.estimateGas();
-    SecretBallot = await deployMethod.send({
-      gasPrice: "0x3b9aca00",
-      gas: gas
-    });
+    SecretBallot = await deployMethod.send();
   } catch(e) {
     $("#deploy-status").text("Error Deploying: " + e);
     return
@@ -99,6 +89,7 @@ window.deploy = async function() {
 }
 
 async function runAt(address) {
+  console.log("running ballot at ", address);
   SecretBallot = web3.confidential.Contract(ballot_artifacts.abi, address, {from: account});
     votingEnded = await SecretBallot.methods.votingEnded().call();
     const numCandidates = await SecretBallot.methods.numCandidates().call();
@@ -139,6 +130,7 @@ async function runAt(address) {
 }
 
 function load() {
+  console.log("window.ethereum = ", window.ethereum);
   web3 = new Web3c(window.ethereum);
   web3.eth.getAccounts().then((a) => {
     if (!a.length) {
@@ -172,4 +164,3 @@ function unlock () {
 $(document).ready(function () {
   Web3c.Promise.then(unlock);
 });
-

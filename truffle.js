@@ -1,22 +1,24 @@
-// Allows us to use ES6 in our migrations and tests.
-require('babel-register')
+const HDWalletProvider = require("truffle-hdwallet-provider");
 
-let HDWalletProvider = require('truffle-hdwallet-provider')
-let mnemonic = "<private key mnemonic>"
+// add your mnemonic here
+const MNEMONIC = "<private key mnemonic>"
 
 module.exports = {
   networks: {
-    development: {
-      host: 'localhost',
-      port: 8545,
-      network_id: '*',
-      gas: 6600000
-    },
     oasis: {
-      provider: () => new HDWalletProvider(mnemonic, "https://web3.oasiscloud.io"),
-      network_id: "*",
-      gas: 3000000,
-      gasPrice: 50000000000
+      provider: function () {
+        return new HDWalletProvider(MNEMONIC, "https://web3.oasiscloud-staging.net");
+      },
+      network_id: "42261",
+      gasPrice: "0x3b9aca00"
+    }
+  },
+  compilers: {
+    external: {
+      command: "./scripts/confidential-compile.js",
+      targets: [{
+        path: "./scripts/build/*.json",
+      }]
     }
   }
-}
+};
