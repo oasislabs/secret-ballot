@@ -36,7 +36,9 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
-    "web3c": "*",
     "web3-provider-engine": "^14.1.0"
+  },
+  "optionalDependencies": {
+    "web3c": "*"
   }
 }
