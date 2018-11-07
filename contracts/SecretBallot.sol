@@ -12,7 +12,7 @@ contract SecretBallot {
 
   // Candidate names and vote totals
   bytes32[] public candidateNames;
-  mapping (bytes32 => uint16) public votesReceived;
+  mapping (bytes32 => uint16) private votesReceived;
 
   // The total number of votes cast so far. Revealed before voting has ended.
   uint16 public totalVotes;
