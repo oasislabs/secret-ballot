@@ -19,7 +19,7 @@ jobs:
 
       # Pre-release access to web3c. remove once released.
       - run: |
-          npm install -g truffle@beta
+          sudo npm install -g truffle@beta
           mkdir -p node_modules/web3c
           curl -L -O /dev/null -H 'Accept: application/json' "https://api.github.com/repos/oasislabs/web3c.js/tarball/v1.0.0-alpha?access_token={$GITHUB_TOKEN}" > web3c.tgz
           tar --strip-components=1 -C node_modules/web3c -xvzf web3c.tgz
