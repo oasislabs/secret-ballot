@@ -35,8 +35,8 @@
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
   },
-  "_TODO:": "link to web3c npm module once pubished.",
   "dependencies": {
+    "web3c": "*",
     "web3-provider-engine": "^14.1.0"
   }
 }
