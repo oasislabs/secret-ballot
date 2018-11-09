@@ -1,7 +1,7 @@
 {
   "name": "secret-ballot",
   "version": "0.0.1",
-  "description": "Simple Web3c Example",
+  "description": "Confidential contract example",
   "scripts": {
     "lint": "eslint ./",
     "build": "webpack",
@@ -36,9 +36,7 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
-    "web3-provider-engine": "^14.1.0"
-  },
-  "optionalDependencies": {
-    "web3c": "*"
+    "web3-provider-engine": "^14.1.0",
+    "web3c": "^1.0.0"
   }
 }
