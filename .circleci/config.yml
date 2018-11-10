@@ -18,13 +18,6 @@ jobs:
           - v1-dependencies-
 
       - run: npm install
-
-      # Pre-release access to web3c. remove once released.
-      - run: |
-          npm install truffle@beta
-          mkdir -p node_modules/web3c
-          curl -L -O /dev/null -H 'Accept: application/json' "https://api.github.com/repos/oasislabs/web3c.js/tarball/v1.0.0-alpha?access_token={$GITHUB_TOKEN}" > web3c.tgz
-          tar --strip-components=1 -C node_modules/web3c -xvzf web3c.tgz
       
       - save_cache:
           paths:
@@ -64,10 +57,7 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: master
+      - build
       - deploy-staging:
           requires:
             - build

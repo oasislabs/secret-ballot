@@ -15,9 +15,9 @@ module.exports = {
   },
   compilers: {
     external: {
-      command: "./scripts/confidential-compile.js",
+      command: "./node_modules/.bin/oasis-compile",
       targets: [{
-        path: "./scripts/build/*.json",
+        path: "./.oasis-build/*.json",
       }]
     }
   }
