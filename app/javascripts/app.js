@@ -3,7 +3,7 @@ import {default as Web3c} from 'web3c';
 
 import ballot_artifacts from '../../build/contracts/SecretBallot.json'
 
-var web3, account, SecretBallot, contractAddress;
+var web3c, account, SecretBallot, contractAddress;
 var votingEnded = false;
 var candidates = [];
 
@@ -57,7 +57,7 @@ window.voteForCandidate = async function (candidateName) {
     $("#vote-status-alert").text("Vote submitted. Please confirm in Metamask...").addClass("blinking");
     $("#candidate").val("");
 
-    let vote = SecretBallot.methods.voteForCandidate(web3.utils.fromAscii(candidateName));
+    let vote = SecretBallot.methods.voteForCandidate(web3c.utils.fromAscii(candidateName));
     await  vote.send();
     refreshVoteTotals();
   } catch (err) {
@@ -72,8 +72,8 @@ function startNew() {
 }
 
 window.deploy = async function() {
-  let candidates = $("#candidates").val().trim().split("\n").map(web3.utils.fromAscii);
-  let protoBallot = new web3.confidential.Contract(ballot_artifacts.abi, undefined, {from: account});
+  let candidates = $("#candidates").val().trim().split("\n").map(web3c.utils.fromAscii);
+  let protoBallot = new web3c.confidential.Contract(ballot_artifacts.abi, undefined, {from: account});
   try {
     let deployMethod = protoBallot.deploy({
       data: ballot_artifacts.bytecode,
@@ -90,7 +90,7 @@ window.deploy = async function() {
 
 async function runAt(address) {
   console.log("running ballot at ", address);
-  SecretBallot = new web3.confidential.Contract(ballot_artifacts.abi, address, {from: account});
+  SecretBallot = new web3c.confidential.Contract(ballot_artifacts.abi, address, {from: account});
     votingEnded = await SecretBallot.methods.votingEnded().call();
     const numCandidates = await SecretBallot.methods.numCandidates().call();
 
@@ -107,12 +107,12 @@ async function runAt(address) {
         .then(async function (response) {
 
           for (let i = numCandidates - 1; i >= 0; i--) {
-            let candidateName = web3.utils.toUtf8(response[i]).toString();
+            let candidateName = web3c.utils.toUtf8(response[i]).toString();
             candidates.push(candidateName);
 
             $("#candidate-list").append('<tr><td>' + candidateName + '</td><td class="center"><span id="votes-' + candidateName + '">?</span></td><td class="center" style="width:150px"><a href="#" id="' + candidateName + '" onclick="voteForCandidate(\'' + candidateName + '\')" class="hidden btn btn-primary vote-button">Vote</a><div class"vote-div" id="row-' + candidateName + '"></td></tr>');
             if (votingEnded) {
-              let votesForCandidate = await SecretBallot.methods.totalVotesFor(web3.utils.fromAscii(candidateName)).call()
+              let votesForCandidate = await SecretBallot.methods.totalVotesFor(web3c.utils.fromAscii(candidateName)).call()
               $("#votes-" + candidateName).text(votesForCandidate);
             }
           }
@@ -131,7 +131,7 @@ async function runAt(address) {
 
 function load() {
   console.log("window.ethereum = ", window.ethereum);
-  web3 = new Web3c(window.ethereum);
+  web3c = new Web3c(window.ethereum);
   web3.eth.getAccounts().then((a) => {
     if (!a.length) {
       $("#voting-status").text("Please unlock your wallet, and then reload.");
