@@ -132,7 +132,7 @@ async function runAt(address) {
 function load() {
   console.log("window.ethereum = ", window.ethereum);
   web3c = new Web3c(window.ethereum);
-  web3.eth.getAccounts().then((a) => {
+  web3c.eth.getAccounts().then((a) => {
     if (!a.length) {
       $("#voting-status").text("Please unlock your wallet, and then reload.");
       return;
