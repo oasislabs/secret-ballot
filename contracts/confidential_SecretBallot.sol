@@ -32,7 +32,7 @@ contract SecretBallot {
         // one vote per address (not sybil resistant)
         require(!hasVoted[msg.sender]);
         // prevent overflow
-        require(votesReceived[candidate] < 2**256 - 1);
+        require(votesReceived[candidate] < ~uint256(0));
         votesReceived[candidate] += 1;
         hasVoted[msg.sender] = true;
         totalVotes += 1;
