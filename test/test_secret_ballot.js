@@ -1,7 +1,7 @@
 // test_secret_ballot.js
 const SecretBallot = artifacts.require("SecretBallot");
 const Web3c = require("web3c");
-const truffleConfig = require("../truffle-config.js");
+const truffleConfig = require("../truffle.js");
 
 contract("SecretBallot", async (accounts) => {
   // Creates our instance of web3c to use in the tests with a provider that
