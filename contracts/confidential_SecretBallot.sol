@@ -33,6 +33,8 @@ contract SecretBallot {
         require(!hasVoted[msg.sender]);
         // prevent overflow
         require(votesReceived[candidate] < ~uint256(0));
+		require(totalVotes < ~uint256(0));
+
         votesReceived[candidate] += 1;
         hasVoted[msg.sender] = true;
         totalVotes += 1;
