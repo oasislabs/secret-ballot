@@ -6,6 +6,7 @@ import ballot_artifacts from '../../build/contracts/SecretBallot.json'
 var web3c, account, SecretBallot, contractAddress;
 var votingEnded = false;
 var candidates = [];
+var nameRegex = new RegExp('^\w+$');
 
 var getUrlParameter = function getUrlParameter(sParam) {
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -72,6 +73,14 @@ function startNew() {
 }
 
 window.deploy = async function() {
+  let candidates_ascii = $("#candidates").val().trim().split("\n");
+  for (let i = 0; i < candidates_ascii.length; i++) {
+    if (!nameRegex.test(candidates_ascii[i])) {
+      $("#deploy-status").text("Error: candidate name '" + candidates_ascii[i] + "' is invalid. aborting.");
+      return;
+    }
+  }
+
   let candidates = $("#candidates").val().trim().split("\n").map(web3c.utils.fromAscii);
   let protoBallot = new web3c.confidential.Contract(ballot_artifacts.abi, undefined, {from: account});
   try {
@@ -108,6 +117,10 @@ async function runAt(address) {
 
           for (let i = numCandidates - 1; i >= 0; i--) {
             let candidateName = web3c.utils.toUtf8(response[i]).toString();
+            if (!nameRegex.test(candidateName)) {
+              $("#voting-status").text("Error: candidate name was invalid. aborting.");
+              return;
+            }
             candidates.push(candidateName);
 
             $("#candidate-list").append('<tr><td>' + candidateName + '</td><td class="center"><span id="votes-' + candidateName + '">?</span></td><td class="center" style="width:150px"><a href="#" id="' + candidateName + '" onclick="voteForCandidate(\'' + candidateName + '\')" class="hidden btn btn-primary vote-button">Vote</a><div class"vote-div" id="row-' + candidateName + '"></td></tr>');
