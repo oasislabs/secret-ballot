@@ -12,7 +12,7 @@ contract("SecretBallot", async (accounts) => {
   // Creates an instance of our secret ballot contract, communicating with the contract
   // at the deployed address. Note: this address will be different in tests since it
   // will be redeployed via migration before every run of truffle test.
-  const secretBallot = web3c.confidential.Contract(SecretBallot.abi, SecretBallot.address, {
+  const secretBallot = new web3c.confidential.Contract(SecretBallot.abi, SecretBallot.address, {
     // the default "from" address of all transactions originating from this contract
     from: accounts[0]
   });
@@ -26,7 +26,7 @@ contract("SecretBallot", async (accounts) => {
     assert.equal(totalVotes, 0);
 
     // sends an encrypted transactions, updating the private data
-    await secretBallot.methods.voteForCandidate(web3c.utils.fromAscii("Charmandar")).send();
+    await secretBallot.methods.voteForCandidate(web3c.utils.fromAscii("John")).send();
 
     // reading the public data again should now be updated
     totalVotes = await secretBallot.methods.totalVotes().call();
