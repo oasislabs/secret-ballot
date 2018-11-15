@@ -14,10 +14,10 @@ contract SecretBallot {
     mapping (address => bool) public hasVoted;
 
     // Tallies for each candidate
-    mapping (bytes32 => uint16) private votesReceived;
+    mapping (bytes32 => uint256) private votesReceived;
 
     // The total number of votes cast so far. Revealed before voting has ended.
-    uint16 public totalVotes;
+    uint256 public totalVotes;
 
     constructor(bytes32[] _candidateNames) public {
         ballotCreator = msg.sender;
@@ -25,9 +25,15 @@ contract SecretBallot {
     }
 
     function voteForCandidate(bytes32 candidate) public {
+        // can only vote during voting period
         require(!votingEnded);
+        // candidate must be part of the ballot
         require(validCandidate(candidate));
+        // one vote per address (not sybil resistant)
         require(!hasVoted[msg.sender]);
+        // prevent overflow
+        require(votesReceived[candidate] < ~uint256(0));
+        require(totalVotes < ~uint256(0));
 
         votesReceived[candidate] += 1;
         hasVoted[msg.sender] = true;
@@ -40,7 +46,7 @@ contract SecretBallot {
         return true;
     }
 
-    function totalVotesFor(bytes32 candidate) view public returns (uint16) {
+    function totalVotesFor(bytes32 candidate) view public returns (uint256) {
         require(validCandidate(candidate));
         require(votingEnded);  // Don't reveal votes until voting has ended
         return votesReceived[candidate];
