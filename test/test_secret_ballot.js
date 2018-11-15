@@ -26,7 +26,7 @@ contract("SecretBallot", async (accounts) => {
     assert.equal(totalVotes, 0);
 
     // sends an encrypted transactions, updating the private data
-    await secretBallot.methods.voteForCandidate(web3c.utils.fromAscii("Charmandar")).send();
+    await secretBallot.methods.voteForCandidate(web3c.utils.fromAscii("John")).send();
 
     // reading the public data again should now be updated
     totalVotes = await secretBallot.methods.totalVotes().call();
