@@ -6,7 +6,7 @@ import ballot_artifacts from '../../build/contracts/SecretBallot.json'
 var web3c, account, SecretBallot, contractAddress;
 var votingEnded = false;
 var candidates = [];
-var nameRegex = new RegExp('^\w+$');
+var nameRegex = new RegExp('^\\w+$');
 
 var getUrlParameter = function getUrlParameter(sParam) {
   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
