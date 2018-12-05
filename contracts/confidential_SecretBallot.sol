@@ -52,7 +52,7 @@ contract SecretBallot {
         return votesReceived[candidate];
     }
 
-    function numCandidates() public constant returns(uint count) {
+    function numCandidates() view public returns(uint count) {
         return candidateNames.length;
     }
 
