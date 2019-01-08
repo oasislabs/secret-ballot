@@ -91,6 +91,13 @@ h3 {
   font-size:18px;
 }
 
+#warning-div {
+  color: #ff4d4d;
+  font-weight: bold;
+  font-size: 14px;
+  width: 500px;
+}
+
 #vote-status-alert, #deploy-status {
   color: black;
   font-weight: bold;
