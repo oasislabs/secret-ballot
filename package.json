@@ -28,9 +28,9 @@
     "eslint-plugin-standard": "^2.0.0",
     "html-webpack-plugin": "^2.28.0",
     "json-loader": "^0.5.4",
-    "oasis-compiler": "^1.0.0",
+    "oasis-compiler": "^1.0.1",
     "style-loader": "^0.13.1",
-    "truffle": "^4.1.14",
+    "truffle-oasis": "^5.0.0",
     "truffle-hdwallet-provider": "^1.0.0-web3one.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"

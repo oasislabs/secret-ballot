@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.23;
 
 contract SecretBallot {
     // The address of the account that created this ballot.
@@ -19,7 +19,7 @@ contract SecretBallot {
     // The total number of votes cast so far. Revealed before voting has ended.
     uint256 public totalVotes;
 
-    constructor(bytes32[] _candidateNames) public {
+    constructor(bytes32[] memory _candidateNames) public {
         ballotCreator = msg.sender;
         candidateNames = _candidateNames;
     }
