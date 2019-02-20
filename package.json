@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "web3-provider-engine": "^14.1.0",
-    "web3c": "^1.0.4"
+    "web3c": "1.0.4"
   }
 }
