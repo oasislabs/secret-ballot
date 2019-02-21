@@ -82,7 +82,7 @@ window.deploy = async function() {
   }
 
   let candidates = $("#candidates").val().trim().split("\n").map(web3c.utils.fromAscii);
-  let protoBallot = new web3c.confidential.Contract(ballot_artifacts.abi, undefined, {from: account});
+  let protoBallot = new web3c.oasis.Contract(ballot_artifacts.abi, undefined, {from: account});
   try {
     let deployMethod = protoBallot.deploy({
       data: ballot_artifacts.bytecode,
@@ -99,7 +99,7 @@ window.deploy = async function() {
 
 async function runAt(address) {
   console.log("running ballot at ", address);
-  SecretBallot = new web3c.confidential.Contract(ballot_artifacts.abi, address, {from: account});
+  SecretBallot = new web3c.oasis.Contract(ballot_artifacts.abi, address, {from: account});
     votingEnded = await SecretBallot.methods.votingEnded().call();
     const numCandidates = await SecretBallot.methods.numCandidates().call();
 
