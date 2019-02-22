@@ -42,7 +42,7 @@ In this example the ballot was deployed to address `0x1dd2838d8290dd83d5d060d1b3
 * In your browser visit `localhost:8080?ballot=<contract address>`
 
 ## Notes and Troubleshooting
-* The smart contract code is available at `contracts/confidential_SecretBallot.sol`
+* The smart contract code is available at `contracts/SecretBallot.sol`
 * If you don't see anything in the web browser, ensure your Metamask is unlocked and configured for the Oasis testnet
 * Due to rate limiting the web UI doesn't always display complete information. If the page doesn't fully populate you may
 need to wait a few seconds and refresh the page
