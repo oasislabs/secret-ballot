@@ -4,5 +4,8 @@ module.exports = function(deployer) {
         web3.utils.fromAscii('John'),
         web3.utils.fromAscii('Jeff'),
         web3.utils.fromAscii('Jim'),
-    ])
+    ],
+    {
+        oasis: { confidential: true }
+    });
 };
