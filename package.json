@@ -28,7 +28,7 @@
     "eslint-plugin-standard": "^2.0.0",
     "html-webpack-plugin": "^2.28.0",
     "json-loader": "^0.5.4",
-    "oasis-compile": "^2.0.0-beta1",
+    "oasis-compile": "^2.0.0",
     "style-loader": "^0.13.1",
     "truffle": "^4.1.14",
     "truffle-hdwallet-provider": "^1.0.0-web3one.0",
@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "web3-provider-engine": "^14.1.0",
-    "web3c": "^2.0.0-beta1"
+    "web3c": "^2.0.0"
   }
 }
