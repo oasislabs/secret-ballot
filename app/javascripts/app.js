@@ -153,6 +153,7 @@ function load() {
   if (getUrlParameter('insecureTestingKeys') === '1') {
     console.warn("Using unsecret key manager signing key");
     web3c = new Web3c(window.ethereum, undefined, {
+      // This public key corresponds to an insecure key used for local key manager testing.
       keyManagerPublicKey: '0x9d41a874b80e39a40c9644e964f0e4f967100c91654bfd7666435fe906af060f',
     });
   } else {
