@@ -9,7 +9,7 @@ To interact with this dApp locally follow the steps below.
 
 * Run `npm install`
 
-* To modify the contract, run `npm install -g truffle`
+* To modify the contract, run `npm install -g truffle-oasis`
 
 ## Building & Deploying the Smart Contract
 To build a new ballot, run:
