@@ -15,7 +15,7 @@
       </v-card-text>
 
       <v-card-actions class="pl-3 pt-4">
-        <v-btn id="Welcome_Button">
+        <v-btn id="Welcome_Button" to="/vote">
           Participate in vote
         </v-btn>
       </v-card-actions>

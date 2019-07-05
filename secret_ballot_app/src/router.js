@@ -10,7 +10,25 @@ const router = new Router({
     {
       path: '/',
       name: 'welcome',
-      component: () => import(/* webpackChunkName: "project" */ './views/Welcome.vue'),
+      component: () => import(/* webpackChunkName: "welcome" */ './views/Welcome.vue'),
+      props: true,
+    },
+    {
+      path: '/vote',
+      name: 'vote',
+      component: () => import(/* webpackChunkName: "vote" */ './views/Vote.vue'),
+      props: true,
+    },
+    {
+      path: '/confirm',
+      name: 'confirm',
+      component: () => import(/* webpackChunkName: "confirm" */ './views/Confirmation.vue'),
+      props: true,
+    },
+    {
+      path: '/results',
+      name: 'results',
+      component: () => import(/* webpackChunkName: "results" */ './views/Results.vue'),
       props: true,
     },
   ],

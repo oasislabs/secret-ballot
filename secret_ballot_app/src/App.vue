@@ -101,7 +101,7 @@ body, .application {
 #SecretBallot_Footer {
   background-color: $lightgray;
 
-  height: 200px !important;
+  height: 140px !important;
 }
 
 #SecretBallot_FooterCard {
