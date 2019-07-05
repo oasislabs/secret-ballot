@@ -48,11 +48,12 @@
 </template>
 
 <script>
+let ballot = require('@/ballot.js');
+
 export default {
   name: 'Vote',
   data () {
     return {
-      radios: null,
       options: [
         'Private Data Sharing',
         'A Wallet',
@@ -61,6 +62,8 @@ export default {
         'Supply chain APP',
         'Other',
       ],
+      radios: null,
+      secretBallot: null,
     };
   },
 };

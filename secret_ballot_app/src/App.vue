@@ -5,7 +5,10 @@
       flat
       app
     >
-      <v-toolbar-title id="SecretBallot_ToolbarText">
+      <v-toolbar-title
+        id="SecretBallot_ToolbarText"
+        @click="$router.push('/')"
+      >
         <img
           id="SecretBallot_ToolbarIcon"
           src="/assets/SecretBallot_icon.svg"
@@ -34,8 +37,8 @@
           >
             <v-card-text>
               <div id="SecretBallot_FooterText">
-                This service is powered by Oasis Network. <br />
-                Learn more about "Oasis Services" or review step by step process on how to build this service.
+                This service is powered by the Oasis Network. <br />
+                Learn more about "Oasis Services" or review step-by-step process on how to build this service.
               </div>
             
               <br />

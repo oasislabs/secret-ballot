@@ -32,6 +32,8 @@
 </template>
 
 <script>
+let ballot = require('@/ballot.js');
+
 export default {
   name: 'Vote',
   data () {
@@ -126,6 +128,10 @@ export default {
 
 .Results_Result:hover {
   box-shadow: 0px 0px 20px rgba(51, 72, 87, 0.2);
+}
+
+.Results_Result:hover .Results_Option {
+  font-weight: bold;
 }
 
 .Results_Score {
