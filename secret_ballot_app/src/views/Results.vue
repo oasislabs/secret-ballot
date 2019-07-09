@@ -9,21 +9,29 @@
       </v-card-title>
 
       <v-card-text>
+        <v-apex-chart
+          align="center"
+          width="250"
+          type="pie"
+          :options="chartOptions"
+          :series="series"
+        ></v-apex-chart>
+
         <div id="Results_Question" class="pb-4">
           <b>Question:</b> <br />
           What are you planning to build on Oasis?
         </div>
 
-        <template v-for="(option, index) of options">
+        <template v-for="(option, index) of chartOptions.labels">
           <div class="Results_Result Results_Even pl-5 pa-2 pt-1" v-if="(index + 1) % 2 === 0">
             <div class="Results_Number pr-4">#{{ index + 1 }}</div>
             <div class="Results_Option pt-2">{{ option }}</div>
-            <div class="Results_Score pt-2 pr-5">10%</div>
+            <div class="Results_Score pt-2 pr-5">{{ series[index] }}%</div>
           </div>
           <div class="Results_Result Results_Odd pl-5 pa-2 pt-1" v-else>
             <div class="Results_Number pr-4">#{{ index + 1 }}</div>
             <div class="Results_Option pt-2">{{ option }}</div>
-            <div class="Results_Score pt-2 pr-5">23%</div>
+            <div class="Results_Score pt-2 pr-5">{{ series[index] }}%</div>
           </div>
         </template>
       </v-card-text>
@@ -35,17 +43,56 @@
 let ballot = require('@/ballot.js');
 
 export default {
-  name: 'Vote',
+  name: 'Results',
   data () {
     return {
-      options: [
-        'Private Data Sharing',
-        'A Wallet',
-        'Medical records APP',
-        'Defi / Credit scoring',
-        'Supply chain APP',
-        'Other',
-      ],
+      series: [38, 18, 16, 13, 9, 6],
+      chartOptions: {
+        legend: {
+          show: false,
+        },
+        labels: [
+          'Private Data Sharing',
+          'A Wallet',
+          'Medical records APP',
+          'Defi / Credit scoring',
+          'Supply chain APP',
+          'Other',
+        ],
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              minAngleToShowLabel: 361,
+            },
+          },
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 170,
+            },
+            legend: {
+              show: false,
+            },
+          },
+        }],
+        tooltip: {
+          fillSeriesColor: false,
+          y: {
+            formatter: (value) => {
+              return `${value}%`;
+            },
+          },
+        },
+        theme: {
+          monochrome: {
+            enabled: true,
+            color: '#ff4212',
+            shadeIntensity: 0.9,
+          },
+        },
+      },
     };
   },
 };
@@ -53,6 +100,11 @@ export default {
 
 <style scoped lang="scss">
 @import "../variables.scss";
+
+.apexcharts-tooltip {
+  background-color: $darkgray;
+  color: $darkgray;
+}
 
 #Results_Card {
   background-color: $lightgray;

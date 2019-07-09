@@ -13,13 +13,24 @@
             >
           </div>
           <div class="pt-2">
-            Your answer has been submitted!
+            Your vote has been submitted!
           </div>
         </div>
         <div class="text-xs-center pt-4">
-          <v-btn id="Confirm_Button" to="/results">
-            View the result
-          </v-btn>
+          <template v-if="voteClosed">
+            <v-btn id="Confirm_ButtonClosed" to="/results">
+              View the result
+            </v-btn>
+          </template>
+          <template v-else>
+            <div id="Confirm_VoteOpenDisclaimer" class="pb-4">
+              The results will be available when the ballot closes in <span>{{ timeToClose }}</span>. <br />
+              We advocate for privacy and information disclosure.
+            </div>
+            <v-btn id="Confirm_ButtonOpen">
+              View the result
+            </v-btn>
+          </template>
         </div>
       </v-card-text>
 
@@ -33,6 +44,12 @@
 <script>
 export default {
   name: 'Confirm',
+  data () {
+    return {
+      voteClosed: false,
+      timeToClose: '1 day and 7 hours',
+    };
+  },
 };
 </script>
 
@@ -62,7 +79,7 @@ export default {
   color: #334857;
 }
 
-#Confirm_Button {
+#Confirm_ButtonClosed {
   height: 38px;
   width: 139px;
 
@@ -81,8 +98,42 @@ export default {
   box-shadow: none;
 }
 
+#Confirm_ButtonOpen {
+  height: 38px;
+  width: 139px;
+
+  background-color: #eaeef1;;
+  border-radius: 3px;
+  color: #c3c9cd;
+
+  font-family: Sul Sans;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: none;
+  line-height: 18px;
+
+  -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+  box-shadow: none;
+}
+
 #Confirm_SubmittedIcon {
   height: 40px;
   width: 40px;
+}
+
+#Confirm_VoteOpenDisclaimer {
+  font-family: Sul Sans;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  text-align: center;
+
+  color: #5B6872;
+
+}
+
+#Confirm_VoteOpenDisclaimer span {
+  font-weight: bold;
 }
 </style>
