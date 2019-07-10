@@ -1,0 +1,13 @@
+[package]
+name = "ballot"
+version = "0.1.0"
+authors = ["Oasis Labs <feedback@oasislabs.com>"]
+edition = "2018"
+publish = false
+
+[dependencies]
+mantle = { version = "0.2", path = "../../mantle" }
+serde = { version = "1.0", features = ["derive"] }
+
+[dev-dependencies]
+mantle-test = { version = "0.2", path = "../../mantle-test" }
