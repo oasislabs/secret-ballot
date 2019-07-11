@@ -36,8 +36,6 @@
 </template>
 
 <script>
-let ballot = require('@/ballot.js');
-
 export default {
   name: 'Results',
   data () {

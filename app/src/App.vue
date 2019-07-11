@@ -59,11 +59,22 @@
 <script>
 export default {
   name: 'App',
-  data() {
-    return {
-      //
+  created () {
+    if (this.$route.query.ballot) {
+      loadService(this.$route.query.ballot);
+    } else {
+      deployService(
+        [
+          '<ballot description>',
+          [
+            '<option 1>',
+            '<option 2>',
+            // ...
+          ],
+        ],
+      );
     }
-  }
+  },
 }
 </script>
 

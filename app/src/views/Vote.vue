@@ -6,7 +6,7 @@
     >
       <v-card-text>
         <div id="Vote_Question">
-          What are you planning to build on Oasis?
+          {{ question }}
         </div>
         <div id="Vote_Reminder" class="pt-3">
           You can only choose one.
@@ -48,22 +48,17 @@
 </template>
 
 <script>
-let ballot = require('@/ballot.js');
-
 export default {
   name: 'Vote',
+  async created () {
+    this.options = await getCandidates();
+    this.question = await getDescription();
+  },
   data () {
     return {
-      options: [
-        'Private Data Sharing',
-        'A Wallet',
-        'Medical records APP',
-        'Defi / Credit scoring',
-        'Supply chain APP',
-        'Other',
-      ],
+      options: [],
+      question: '',
       radios: null,
-      secretBallot: null,
     };
   },
 };
