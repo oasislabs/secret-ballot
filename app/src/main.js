@@ -11,7 +11,7 @@ let SecretBallot;
 
 // TODO: Eliminate wallet and transition to Developer Gateway
 // Wallet private key.
-const privateKey = '0xf343c22caf5fab44778d295b72ad187e6a58d8e84b694f7ea6f9326c34037265';
+const privateKey = '<private key>';
 
 // Wallet for signing and paying for transactions.
 const wallet = new oasis.Wallet(privateKey);
@@ -31,7 +31,7 @@ window.deployService = async (constructorArgs) => {
       return new Uint8Array(bytecode);
     });
 
-  SecretBallot = oasis.deploy({
+  SecretBallot = await oasis.deploy({
     bytecode,
     arguments: constructorArgs,
     header: { confidential: false },
@@ -46,6 +46,7 @@ window.loadService = async (address) => {
 
 // Ballot API
 window.getCandidates = async () => {
+  const x = await SecretBallot.candidates();
   return SecretBallot.candidates();
 }
 
